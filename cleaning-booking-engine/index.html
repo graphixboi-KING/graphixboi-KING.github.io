@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cleaning Booking Engine</title>
+  <meta name="description" content="Book more commercial cleaning estimates with a smarter field-to-funnel system.">
+  <style>
+    :root {
+      --bg: #f3f7fb;
+      --bg-2: #ffffff;
+      --text: #10202f;
+      --muted: #5a6a79;
+      --accent: #1f8fff;
+      --accent-dark: #1169c1;
+      --line: #d8e3ee;
+      --card: rgba(255,255,255,.86);
+      --shadow: 0 18px 50px rgba(24,51,78,.10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+      line-height: 1.55;
+    }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 22px; }
+    header { padding: 26px 0 10px; }
+    .nav {
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+      background: rgba(255,255,255,.8); border:1px solid rgba(255,255,255,.95); border-radius: 18px; padding: 14px 18px; box-shadow: var(--shadow);
+    }
+    .brand { font-weight: 800; }
+    .nav a { text-decoration:none; color: var(--muted); margin-left: 14px; font-size: 14px; }
+    .hero { padding: 56px 0 38px; display:grid; grid-template-columns: 1.15fr .85fr; gap: 24px; align-items:center; }
+    .hero-copy, .hero-visual, .card { background: var(--card); border: 1px solid rgba(255,255,255,.95); border-radius: 28px; padding: 28px; box-shadow: var(--shadow); }
+    .pill { display:inline-block; padding:8px 12px; border-radius:999px; background:#eef6ff; color:#3174b8; font-size:13px; }
+    h1 { font-size: clamp(42px, 6.5vw, 76px); line-height: .96; margin: 16px 0 14px; letter-spacing: -.04em; max-width: 11ch; }
+    .sub { font-size: 20px; color: var(--muted); max-width: 740px; }
+    .cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top: 24px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; padding:14px 20px; border-radius:14px; text-decoration:none; font-weight:700; }
+    .btn-primary { background: linear-gradient(180deg, var(--accent), var(--accent-dark)); color:#fff; }
+    .btn-secondary { background:#fff; color: var(--text); border:1px solid var(--line); }
+    .hero-image { width:100%; border-radius:22px; height: 260px; object-fit: cover; display:block; }
+    .caption { color: var(--muted); font-size: 14px; margin-top: 10px; }
+    .section { padding: 26px 0; }
+    .section h2 { font-size: clamp(30px, 4vw, 48px); line-height: 1.02; margin: 0 0 12px; letter-spacing: -.03em; }
+    .lead { color: var(--muted); font-size: 18px; max-width: 900px; }
+    .grid-3 { display:grid; grid-template-columns: repeat(3,1fr); gap:18px; }
+    .grid-2 { display:grid; grid-template-columns: repeat(2,1fr); gap:18px; }
+    .module-img { width:100%; border-radius:18px; height: 180px; object-fit: cover; margin-bottom: 14px; }
+    .quote { font-size: 22px; line-height: 1.35; }
+    .small { font-size: 14px; color: var(--muted); }
+    .mission { background: linear-gradient(135deg, #0f2234, #173852); color:#fff; border-radius:28px; padding:30px; box-shadow: var(--shadow); }
+    .mission .lead, .mission .small { color: rgba(255,255,255,.78); }
+    @media (max-width: 940px) { .hero, .grid-3, .grid-2 { grid-template-columns: 1fr; } h1 { max-width:none; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <div class="brand">Cleaning Booking Engine</div>
+        <div>
+          <a href="#mission">Mission</a>
+          <a href="#system">System</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <span class="pill">Commercial cleaning growth infrastructure</span>
+        <h1>Book more commercial cleaning estimates with a smarter field-to-funnel system.</h1>
+        <p class="sub">Cleaning Booking Engine helps cleaning businesses find nearby prospects, route leads to call-center reps, handle inbound inquiries, and book more estimate appointments.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="mailto:kinggraphixboi@gmail.com?subject=Cleaning%20Booking%20Engine%20Demo">Book a Demo</a>
+          <a class="btn btn-secondary" href="#system">See How It Works</a>
+        </div>
+        <p class="caption">Built to connect field teams, call-center workflows, inbound AI, and real estimate bookings.</p>
+      </div>
+      <div class="hero-visual">
+        <img class="hero-image" src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80" alt="Commercial cleaning team preparing equipment in a modern office building">
+        <div class="caption">Turn where your teams already go into prospecting, lead flow, and booked walkthrough advantage.</div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="mission">
+      <div class="mission">
+        <h2>Bridge the gap between clients and cleaning businesses through practical AI and smarter operations.</h2>
+        <p class="lead">We believe strong service businesses should not lose work because prospecting, field coordination, dispatch, and follow-up are disconnected. Our mission is to use AI-assisted communication and field-connected systems to make it easier for real cleaning operators to reach the right businesses, respond faster, and grow with less waste.</p>
+        <p class="small">This is not about replacing people. It is about helping service teams connect with more clients through better systems.</p>
+      </div>
+    </section>
+
+    <section class="section wrap">
+      <h2>A system built for the real way cleaning businesses operate.</h2>
+      <p class="lead">Commercial cleaning companies do not just need leads. They need field awareness, faster response, cleaner handoffs, and a reliable way to turn territory presence into booked estimates.</p>
+      <div class="grid-3">
+        <div class="card">
+          <img class="module-img" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=80" alt="Office building hallway representing commercial prospecting territory">
+          <h3>Territory prospecting</h3>
+          <p class="small">Find commercial prospects near where workers will already be operating.</p>
+        </div>
+        <div class="card">
+          <img class="module-img" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1000&q=80" alt="Call center representative with headset managing lead calls">
+          <h3>Call-center lead flow</h3>
+          <p class="small">Feed reps cleaner prospect queues so they can qualify and book walkthroughs.</p>
+        </div>
+        <div class="card">
+          <img class="module-img" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80" alt="Mobile worker workflow and digital field coordination">
+          <h3>Field-connected workflow</h3>
+          <p class="small">Keep field teams, estimate appointments, and sales notes connected.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="system">
+      <h2>What the system does</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>For growth</h3>
+          <ul>
+            <li>Finds nearby commercial prospects before workers enter an area</li>
+            <li>Routes leads to call-center reps or sales operators</li>
+            <li>Handles inbound inquiries with AI-assisted intake</li>
+            <li>Books estimate appointments for live humans</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>For operations</h3>
+          <ul>
+            <li>Links field presence to prospecting opportunity</li>
+            <li>Tracks estimate requests and call outcomes</li>
+            <li>Supports worker notes and field updates</li>
+            <li>Brings sales, dispatch, and field work closer together</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap">
+      <div class="card">
+        <div class="quote">“We are building new infrastructure so cleaning businesses can reach the right clients faster, book more walkthroughs, and stop losing work because of disconnected systems.”</div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="contact">
+      <div class="card">
+        <h2>Want to see the system for your cleaning business?</h2>
+        <p class="lead">Book a demo and we’ll walk through how territory prospecting, call-center workflow, inbound intake, and estimate booking can work together.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="mailto:kinggraphixboi@gmail.com?subject=Cleaning%20Booking%20Engine%20Demo">Book a Demo</a>
+        </div>
+        <p class="small">Demo requests route to: kinggraphixboi@gmail.com</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
