@@ -7,124 +7,241 @@
   <meta name="description" content="Turn stale inquiries into booked consultations with a WhatsApp follow-up system for med spas.">
   <style>
     :root {
-      --bg: #f7f4f1;
-      --card: #ffffff;
-      --text: #1f1a17;
-      --muted: #6e645d;
-      --accent: #8a5a44;
-      --accent-2: #d8b8a8;
-      --line: #eadfd8;
-      --success: #0f7b5f;
+      --bg: #f8f3ee;
+      --bg-2: #fffaf6;
+      --card: rgba(255,255,255,.78);
+      --card-solid: #ffffff;
+      --text: #1f1714;
+      --muted: #6f625a;
+      --accent: #9b5f45;
+      --accent-dark: #7f4b35;
+      --accent-soft: #edd4c7;
+      --line: rgba(159,120,98,.18);
+      --shadow: 0 16px 48px rgba(49,27,18,.08);
+      --shadow-soft: 0 10px 28px rgba(49,27,18,.05);
+      --success: #1a7b62;
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color: var(--text);
-      background: linear-gradient(180deg, #fbf9f7 0%, var(--bg) 100%);
-      line-height: 1.5;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.95), transparent 32%),
+        radial-gradient(circle at top right, rgba(237,212,199,.55), transparent 24%),
+        linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+      line-height: 1.55;
     }
-    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
-    header { padding: 24px 0; }
-    .brand { font-weight: 700; letter-spacing: .02em; }
-    .hero { padding: 48px 0 32px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items: center; }
-    .pill { display: inline-block; padding: 8px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--line); color: var(--muted); font-size: 14px; }
-    h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.02; margin: 18px 0 14px; letter-spacing: -0.03em; }
-    .sub { font-size: 20px; color: var(--muted); max-width: 760px; }
-    .cta-row { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+    .orb, .orb-2 {
+      position: fixed; inset: auto; pointer-events: none; z-index: 0; filter: blur(24px); opacity: .5;
+    }
+    .orb { width: 280px; height: 280px; background: rgba(237,212,199,.7); top: 90px; right: -40px; border-radius: 50%; }
+    .orb-2 { width: 260px; height: 260px; background: rgba(255,255,255,.9); left: -60px; top: 360px; border-radius: 50%; }
+    .wrap { position: relative; z-index: 1; max-width: 1160px; margin: 0 auto; padding: 0 22px; }
+    header { padding: 28px 0 12px; }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+      background: rgba(255,255,255,.58); backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.7); box-shadow: var(--shadow-soft);
+      padding: 14px 18px; border-radius: 18px;
+    }
+    .brand { font-weight: 700; letter-spacing: .01em; }
+    .brand small { display: block; color: var(--muted); font-weight: 500; font-size: 12px; margin-top: 2px; }
+    .nav-links { display: flex; gap: 18px; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; }
     .btn {
-      display: inline-block; padding: 14px 20px; border-radius: 12px; text-decoration: none; font-weight: 600;
-      border: 1px solid transparent;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 20px; border-radius: 14px; text-decoration: none; font-weight: 650;
+      border: 1px solid transparent; transition: .2s ease; cursor: pointer;
     }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-secondary { background: #fff; color: var(--text); border-color: var(--line); }
-    .card {
-      background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: 0 8px 28px rgba(34,24,18,.05);
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%); color: #fff; box-shadow: 0 12px 28px rgba(127,75,53,.24); }
+    .btn-secondary { background: rgba(255,255,255,.82); color: var(--text); border-color: var(--line); }
+    .hero {
+      padding: 58px 0 44px;
+      display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items: center;
     }
-    .stat { font-size: 14px; color: var(--muted); margin-top: 10px; }
-    .section { padding: 28px 0; }
-    .section h2 { font-size: clamp(28px, 4vw, 44px); line-height: 1.06; margin: 0 0 12px; letter-spacing: -0.02em; }
-    .section p.lead { font-size: 18px; color: var(--muted); max-width: 900px; }
+    .hero-copy {
+      background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.45));
+      border: 1px solid rgba(255,255,255,.72);
+      backdrop-filter: blur(16px);
+      border-radius: 28px; padding: 34px; box-shadow: var(--shadow);
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 9px 13px; border-radius: 999px;
+      background: rgba(255,255,255,.88); border: 1px solid rgba(255,255,255,.82); color: var(--muted); font-size: 14px;
+    }
+    .dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 0 6px rgba(26,123,98,.10); }
+    h1 {
+      font-size: clamp(42px, 6vw, 74px); line-height: .98; margin: 18px 0 14px; letter-spacing: -.04em;
+      max-width: 11ch;
+    }
+    .sub { font-size: 20px; color: var(--muted); max-width: 720px; }
+    .cta-row { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+    .proof-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .proof {
+      padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.72); border: 1px solid var(--line); color: var(--muted); font-size: 13px;
+    }
+    .mock {
+      padding: 18px; border-radius: 28px; background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.65));
+      border: 1px solid rgba(255,255,255,.72); box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+    .mock-card {
+      background: linear-gradient(180deg, #fff, #fbf5f0); border: 1px solid rgba(159,120,98,.16); border-radius: 22px; padding: 18px; box-shadow: var(--shadow-soft);
+    }
+    .mock-card + .mock-card { margin-top: 14px; }
+    .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); margin-bottom: 8px; }
+    .bubble { border-radius: 18px; padding: 14px 14px; background: #fff; border: 1px solid rgba(159,120,98,.12); margin: 10px 0; }
+    .bubble.alt { background: linear-gradient(180deg, #a56649, #8e583f); color: #fff; border-color: transparent; margin-left: 34px; }
+    .section { padding: 30px 0; }
+    .section-head { max-width: 880px; margin-bottom: 18px; }
+    .section h2 { font-size: clamp(30px, 4vw, 48px); line-height: 1.02; margin: 0 0 12px; letter-spacing: -.03em; }
+    .lead { font-size: 18px; color: var(--muted); }
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .card {
+      background: var(--card); border: 1px solid rgba(255,255,255,.72); border-radius: 22px; padding: 22px; box-shadow: var(--shadow-soft); backdrop-filter: blur(14px);
+    }
+    .card h3 { margin: 0 0 10px; font-size: 22px; }
+    .card p { margin: 0; color: var(--muted); }
     ul.clean { margin: 0; padding-left: 18px; }
-    li { margin: 10px 0; }
-    .price { font-size: 34px; font-weight: 800; }
+    ul.clean li { margin: 10px 0; }
+    .band {
+      background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.35));
+      border: 1px solid rgba(255,255,255,.72); border-radius: 28px; padding: 26px; box-shadow: var(--shadow-soft);
+    }
+    .pricing-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.72));
+      border: 1px solid rgba(255,255,255,.75); border-radius: 24px; padding: 24px; box-shadow: var(--shadow);
+    }
+    .pricing-card.featured { outline: 2px solid rgba(155,95,69,.18); transform: translateY(-2px); }
+    .price { font-size: 42px; font-weight: 800; letter-spacing: -.03em; }
     .small { font-size: 14px; color: var(--muted); }
-    .faq details { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+    .tag { display: inline-block; padding: 7px 10px; border-radius: 999px; background: rgba(255,255,255,.8); color: var(--accent-dark); border: 1px solid var(--accent-soft); font-size: 12px; margin-bottom: 12px; }
+    .faq details {
+      background: rgba(255,255,255,.76); border: 1px solid rgba(255,255,255,.8); border-radius: 18px; padding: 18px 18px; box-shadow: var(--shadow-soft); backdrop-filter: blur(12px);
+    }
     .faq details + details { margin-top: 12px; }
-    .final { padding: 32px 0 56px; }
-    footer { padding: 28px 0 52px; color: var(--muted); font-size: 14px; }
-    .tag { display: inline-block; padding: 6px 10px; border-radius: 999px; background: #fdf7f3; color: var(--accent); border: 1px solid var(--accent-2); font-size: 13px; margin: 6px 6px 0 0; }
-    @media (max-width: 900px) {
+    .faq p { color: var(--muted); margin: 10px 0 0; }
+    .final { padding: 28px 0 60px; }
+    .final-card {
+      background: linear-gradient(135deg, rgba(155,95,69,.95), rgba(126,72,51,.96));
+      color: #fff; border-radius: 30px; padding: 34px; box-shadow: 0 20px 48px rgba(111,69,52,.28);
+    }
+    .final-card .lead { color: rgba(255,255,255,.82); }
+    footer { padding: 0 0 48px; color: var(--muted); font-size: 14px; }
+    @media (max-width: 960px) {
       .hero, .grid-3, .grid-2 { grid-template-columns: 1fr; }
-      h1 { max-width: 12ch; }
+      .nav { flex-direction: column; align-items: flex-start; }
+      .nav-links { width: 100%; justify-content: space-between; flex-wrap: wrap; }
+      h1 { max-width: none; }
+      .hero-copy, .mock, .band, .final-card { padding: 24px; }
+    }
+    @media (max-width: 640px) {
+      .cta-row { flex-direction: column; }
+      .btn { width: 100%; }
+      .nav-links { gap: 10px; }
     }
   </style>
 </head>
 <body>
+  <div class="orb"></div>
+  <div class="orb-2"></div>
+
   <header>
     <div class="wrap">
-      <div class="brand">Consult Recovery System</div>
+      <div class="nav">
+        <div class="brand">Consult Recovery System<small>WhatsApp follow-up for med spas</small></div>
+        <div class="nav-links">
+          <a href="#solution">Solution</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#faq">FAQ</a>
+          <a class="btn btn-primary" href="mailto:contact@consultrecoverysystem.com?subject=Book%20a%20Demo">Book a Demo</a>
+        </div>
+      </div>
     </div>
   </header>
 
   <main>
     <section class="hero wrap">
-      <div>
-        <span class="pill">For med spas and aesthetic clinics</span>
+      <div class="hero-copy">
+        <span class="pill"><span class="dot"></span> For med spas and aesthetic clinics</span>
         <h1>Turn stale inquiries into booked consultations.</h1>
         <p class="sub">A WhatsApp follow-up system for med spas that revives old leads, qualifies new inquiries, and drives more bookings without adding headcount.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="mailto:contact@consultrecoverysystem.com?subject=Book%20a%20Demo">Book a Demo</a>
           <a class="btn btn-secondary" href="#pricing">See Pricing</a>
         </div>
-        <div class="stat">Built for clinics already generating demand but leaking money in follow-up.</div>
+        <div class="proof-row">
+          <span class="proof">Recover stale leads</span>
+          <span class="proof">Improve speed-to-lead</span>
+          <span class="proof">Qualify faster</span>
+          <span class="proof">Book more consults</span>
+        </div>
       </div>
-      <div class="card">
-        <h3 style="margin-top:0">What this system fixes</h3>
-        <ul class="clean">
-          <li>Old consultation leads going cold</li>
-          <li>Slow response to new inquiries</li>
-          <li>Inconsistent follow-up from front desk</li>
-          <li>High-intent prospects slipping away</li>
-          <li>Ad spend wasted after the click</li>
-        </ul>
+      <div class="mock">
+        <div class="mock-card">
+          <div class="eyebrow">What this fixes</div>
+          <div class="bubble">Old consultation leads go cold and never get reworked.</div>
+          <div class="bubble alt">We help revive those inquiries and move good-fit prospects toward booking.</div>
+          <div class="bubble">Front desk follow-up is inconsistent. Speed-to-lead slips. Ad spend gets wasted.</div>
+        </div>
+        <div class="mock-card">
+          <div class="eyebrow">The outcome</div>
+          <ul class="clean">
+            <li>More booked consultations</li>
+            <li>Cleaner qualification</li>
+            <li>Less wasted lead spend</li>
+          </ul>
+        </div>
       </div>
     </section>
 
     <section class="section wrap">
-      <h2>Most clinics do not have a lead problem. They have a follow-up problem.</h2>
-      <p class="lead">You already paid for the attention. The real leak happens after the inquiry comes in: slow responses, dead lead lists, weak qualification, and no consistent path to booking.</p>
-      <div>
-        <span class="tag">Stale inquiries</span>
-        <span class="tag">Slow speed-to-lead</span>
-        <span class="tag">Missed follow-up</span>
-        <span class="tag">Lost consultations</span>
+      <div class="band">
+        <div class="section-head">
+          <h2>Most clinics do not have a lead problem. They have a follow-up problem.</h2>
+          <p class="lead">You already paid for the attention. The real leak happens after the inquiry comes in: slow responses, dead lead lists, weak qualification, and no consistent path to booking.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card"><h3>Slow response</h3><p>Leads wait too long and interest drops fast.</p></div>
+          <div class="card"><h3>Dead inquiries</h3><p>Old consultation leads sit untouched instead of getting reactivated.</p></div>
+          <div class="card"><h3>Lost revenue</h3><p>Money leaks after the lead is already paid for.</p></div>
+        </div>
       </div>
     </section>
 
-    <section class="section wrap">
-      <h2>A WhatsApp lead recovery and booking system for med spas.</h2>
-      <p class="lead">This is not generic AI automation. It is a consult recovery system focused on one outcome: more booked consultations from leads you already have.</p>
+    <section class="section wrap" id="solution">
+      <div class="section-head">
+        <h2>A WhatsApp lead recovery and booking system for med spas.</h2>
+        <p class="lead">This is not generic AI automation. It is a consult recovery system focused on one outcome: more booked consultations from leads you already have.</p>
+      </div>
       <div class="grid-3">
         <div class="card">
-          <h3>1. Reactivate old leads</h3>
+          <span class="tag">Step 1</span>
+          <h3>Reactivate old leads</h3>
           <p>Send smart reactivation messages to stale inquiries that never booked.</p>
         </div>
         <div class="card">
-          <h3>2. Qualify faster</h3>
+          <span class="tag">Step 2</span>
+          <h3>Qualify faster</h3>
           <p>Filter for fit, urgency, and intent before your team wastes time.</p>
         </div>
         <div class="card">
-          <h3>3. Push to booking</h3>
+          <span class="tag">Step 3</span>
+          <h3>Push to booking</h3>
           <p>Move interested prospects toward a consult with cleaner follow-up.</p>
         </div>
       </div>
     </section>
 
     <section class="section wrap">
-      <h2>What the system does</h2>
+      <div class="section-head">
+        <h2>What the system does</h2>
+        <p class="lead">It supports the front desk instead of replacing it — making follow-up more consistent, faster, and more revenue-aware.</p>
+      </div>
       <div class="grid-2">
         <div class="card">
           <ul class="clean">
@@ -144,7 +261,10 @@
     </section>
 
     <section class="section wrap">
-      <h2>Who this is for</h2>
+      <div class="section-head">
+        <h2>Who this is for</h2>
+        <p class="lead">Built for clinics already generating demand but leaking money in the follow-up layer.</p>
+      </div>
       <div class="grid-2">
         <div class="card">
           <ul class="clean">
@@ -164,24 +284,27 @@
     </section>
 
     <section class="section wrap" id="pricing">
-      <h2>Pricing</h2>
+      <div class="section-head">
+        <h2>Pricing</h2>
+        <p class="lead">Start with a lean pilot, prove the workflow, then expand.</p>
+      </div>
       <div class="grid-2">
-        <div class="card">
-          <div class="small">Pilot Setup</div>
+        <div class="pricing-card">
+          <span class="tag">Pilot Setup</span>
           <div class="price">$1,000</div>
           <div class="small">setup + $500/month</div>
-          <ul class="clean">
+          <ul class="clean" style="margin-top:16px;">
             <li>WhatsApp scripts</li>
             <li>Lead reactivation flow</li>
             <li>Basic qualification flow</li>
             <li>Operator workflow</li>
           </ul>
         </div>
-        <div class="card">
-          <div class="small">Standard Setup</div>
+        <div class="pricing-card featured">
+          <span class="tag">Standard Setup</span>
           <div class="price">$2,500</div>
           <div class="small">setup + $1,000/month</div>
-          <ul class="clean">
+          <ul class="clean" style="margin-top:16px;">
             <li>Full consult recovery workflow</li>
             <li>Qualification + booking prompts</li>
             <li>No-response follow-up sequence</li>
@@ -191,8 +314,10 @@
       </div>
     </section>
 
-    <section class="section wrap faq">
-      <h2>FAQ</h2>
+    <section class="section wrap faq" id="faq">
+      <div class="section-head">
+        <h2>FAQ</h2>
+      </div>
       <details>
         <summary><strong>Is this replacing my front desk?</strong></summary>
         <p>No. It supports follow-up, qualification, and booking flow. Humans still handle edge cases and high-value conversations.</p>
@@ -208,18 +333,18 @@
     </section>
 
     <section class="final wrap">
-      <div class="card">
-        <h2>Want to see how this would work for your clinic?</h2>
+      <div class="final-card">
+        <h2 style="margin-top:0">Want to see how this would work for your clinic?</h2>
         <p class="lead">Book a short demo and we’ll show you the flow.</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="mailto:contact@consultrecoverysystem.com?subject=Book%20a%20Demo">Book a Demo</a>
+          <a class="btn btn-secondary" href="mailto:contact@consultrecoverysystem.com?subject=Book%20a%20Demo">Book a Demo</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap">Consult Recovery System · Landing page draft ready for free static hosting</div>
+    <div class="wrap">Consult Recovery System · Premium landing page draft for med spa outreach</div>
   </footer>
 </body>
 </html>
